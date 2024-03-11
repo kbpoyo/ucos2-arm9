@@ -1,0 +1,62 @@
+[
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg -g -o CMakeFiles/boot.dir/boot.S.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/boot/boot.S",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/boot/boot.S"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/boot.dir/boot.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/boot/boot.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/boot/boot.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg -g -o CMakeFiles/ucos.dir/port/os_cpu_a.S.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port/os_cpu_a.S",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port/os_cpu_a.S"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/__/tools/klib.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/tools/klib.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/tools/klib.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/board/gpio.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/gpio.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/gpio.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/board/irq.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/irq.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/irq.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/board/timer.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/timer.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/timer.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/board/uart.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/uart.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/board/uart.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/div-faker.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/div-faker.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/div-faker.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/main.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/main.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/main.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/port/os_cpu_c.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port/os_cpu_c.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port/os_cpu_c.c"
+},
+{
+  "directory": "/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos",
+  "command": "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc  -I/home/kbpoyo/code/uC-OS2-s3c2440/inc -I/home/kbpoyo/code/uC-OS2-s3c2440/src -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port -I/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg  -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g -o CMakeFiles/ucos.dir/source/ucos_ii.c.o -c /home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source/ucos_ii.c",
+  "file": "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source/ucos_ii.c"
+}
+]

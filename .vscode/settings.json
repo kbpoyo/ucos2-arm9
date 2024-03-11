@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "os_cpu.h": "c",
+        "os_trace.h": "c",
+        "ucos_ii.h": "c",
+        "log.h": "c",
+        "timer.h": "c",
+        "irq.h": "c",
+        "uart.h": "c",
+        "klib.h": "c",
+        "gpio.h": "c"
+    }
+}

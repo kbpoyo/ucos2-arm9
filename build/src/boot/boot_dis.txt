@@ -1,0 +1,403 @@
+
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot/boot.elf:     file format elf32-littlearm
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot/boot.elf
+architecture: arm, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x00000000
+
+Program Header:
+    LOAD off    0x00008000 vaddr 0x00000000 paddr 0x00000000 align 2**15
+         filesz 0x00000238 memsz 0x00000238 flags r-x
+   STACK off    0x00000000 vaddr 0x00000000 paddr 0x00000000 align 2**2
+         filesz 0x00000000 memsz 0x00000000 flags rwx
+PAX_FLAGS off    0x00000000 vaddr 0x00000000 paddr 0x00000000 align 2**2
+         filesz 0x00000000 memsz 0x00000000 flags --- 2800
+private flags = 5000000: [Version5 EABI]
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000238  00000000  00000000  00008000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .ARM.attributes 00000026  00000000  00000000  00008238  2**0
+                  CONTENTS, READONLY
+  2 .comment      00000018  00000000  00000000  0000825e  2**0
+                  CONTENTS, READONLY
+  3 .debug_line   000000d8  00000000  00000000  00008276  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000087  00000000  00000000  0000834e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 00000015  00000000  00000000  000083d5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_aranges 00000020  00000000  00000000  000083f0  2**3
+                  CONTENTS, READONLY, DEBUGGING
+SYMBOL TABLE:
+00000000 l    d  .text	00000000 .text
+00000000 l    d  .ARM.attributes	00000000 .ARM.attributes
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000020 l       .text	00000000 _exc_handler_reset
+000001d8 l       .text	00000000 _exc_handler_undef
+000001c0 l       .text	00000000 _exc_handler_swi
+000001d0 l       .text	00000000 _exc_handler_prefetch_abort
+000001c8 l       .text	00000000 _exc_handler_data_abort
+000001a4 l       .text	00000000 _exc_handler_irq
+000001e0 l       .text	00000000 _exc_handler_ifq
+00000140 l       .text	00000000 _init_stack
+000001e4 l       .text	00000000 undef
+00000000 l    df *ABS*	00000000 boot.c
+00000000 g       .text	00000000 _start
+
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+#include "common/os_config.h" 
+    .text
+    .global _start
+
+_start:
+    b _exc_handler_reset
+   0:	ea000006 	b	20 <_exc_handler_reset>
+    b _exc_handler_undef
+   4:	ea000073 	b	1d8 <_exc_handler_undef>
+    b _exc_handler_swi
+   8:	ea00006c 	b	1c0 <_exc_handler_swi>
+    b _exc_handler_prefetch_abort
+   c:	ea00006f 	b	1d0 <_exc_handler_prefetch_abort>
+    b _exc_handler_data_abort
+  10:	ea00006c 	b	1c8 <_exc_handler_data_abort>
+    nop
+  14:	e1a00000 	nop			; (mov r0, r0)
+    b _exc_handler_irq
+  18:	ea000061 	b	1a4 <_exc_handler_irq>
+    b _exc_handler_ifq
+  1c:	ea00006f 	b	1e0 <_exc_handler_ifq>
+
+00000020 <_exc_handler_reset>:
+
+
+
+_exc_handler_reset:
+    //设置svc模式,并关闭irq
+    mrs r0, cpsr
+  20:	e10f0000 	mrs	r0, CPSR
+    bic r0, #0x1f
+  24:	e3c0001f 	bic	r0, r0, #31
+    orr r0, #0xd3  
+  28:	e38000d3 	orr	r0, r0, #211	; 0xd3
+    msr cpsr, r0
+  2c:	e129f000 	msr	CPSR_fc, r0
+
+    //1.关闭看门狗
+    ldr r0, =_rWTCON
+  30:	e3a00453 	mov	r0, #1392508928	; 0x53000000
+    ldr r1, =0x0
+  34:	e3a01000 	mov	r1, #0
+    str r1, [r0]
+  38:	e5801000 	str	r1, [r0]
+
+    //2.屏蔽所有中断
+    ldr r0, =_rINTMSK
+  3c:	e59f01a4 	ldr	r0, [pc, #420]	; 1e8 <undef+0x4>
+    ldr r1, =0xffffffff
+  40:	e3e01000 	mvn	r1, #0
+    str r1, [r0]
+  44:	e5801000 	str	r1, [r0]
+
+	ldr	r0,=_rINTSUBMSK    //屏蔽所有子中断
+  48:	e59f019c 	ldr	r0, [pc, #412]	; 1ec <undef+0x8>
+	ldr	r1,=0x7fff
+  4c:	e59f119c 	ldr	r1, [pc, #412]	; 1f0 <undef+0xc>
+	str	r1,[r0]
+  50:	e5801000 	str	r1, [r0]
+
+
+    //3.初始化锁相环(PLL)和时钟
+    ldr r0, =_rLOCKTIME        //设置M_PLL和U_PLL的生效延迟
+  54:	e3a00313 	mov	r0, #1275068416	; 0x4c000000
+    ldr r1, =rLOCKTIME_INIT    //由于配置或其它原因导致主频变化时
+  58:	e3e01000 	mvn	r1, #0
+    str r1, [r0]                //PLL新的输出需要一个稳定的过度时间
+  5c:	e5801000 	str	r1, [r0]
+
+    ldr r0, =_rCLKDIVN //设置时钟分配控制寄存器，FCLK:HCLK:PCLK=4:1:0.5
+  60:	e59f018c 	ldr	r0, [pc, #396]	; 1f4 <undef+0x10>
+    ldr r1, =rCLKDIVN_INIT
+  64:	e3a01005 	mov	r1, #5
+    str r1, [r0]
+  68:	e5801000 	str	r1, [r0]
+
+    ldr r0, =_rCAMDIVN  //设置摄像头时钟分频控制寄存器，配合rCLKDIVN使用
+  6c:	e59f0184 	ldr	r0, [pc, #388]	; 1f8 <undef+0x14>
+    ldr r1, =rCAMDIVN_INIT
+  70:	e3a01000 	mov	r1, #0
+    str r1, [r0]
+  74:	e5801000 	str	r1, [r0]
+
+    mrc p15, 0, r0, c1, c0, 0   //设置协处理器的c1寄存器，使cpu进入异步总线模式，不然cpu使用的是HCLK而不是FCLK
+  78:	ee110f10 	mrc	15, 0, r0, cr1, cr0, {0}
+    orr r0, r0, #0xc0000000
+  7c:	e3800103 	orr	r0, r0, #-1073741824	; 0xc0000000
+    mcr p15, 0, r0, c1, c0, 0
+  80:	ee010f10 	mcr	15, 0, r0, cr1, cr0, {0}
+
+
+    ldr r0, =_rUPLLCON //需要先设置UPLL再设置MPLL
+  84:	e59f0170 	ldr	r0, [pc, #368]	; 1fc <undef+0x18>
+    ldr r1, =((U_MDIV << 12) + (U_PDIV << 4) + U_SDIV)
+  88:	e59f1170 	ldr	r1, [pc, #368]	; 200 <undef+0x1c>
+    str r1, [r0]
+  8c:	e5801000 	str	r1, [r0]
+    nop //需要7个时钟等待upll生效
+  90:	e1a00000 	nop			; (mov r0, r0)
+    nop
+  94:	e1a00000 	nop			; (mov r0, r0)
+    nop
+  98:	e1a00000 	nop			; (mov r0, r0)
+    nop
+  9c:	e1a00000 	nop			; (mov r0, r0)
+    nop
+  a0:	e1a00000 	nop			; (mov r0, r0)
+    nop
+  a4:	e1a00000 	nop			; (mov r0, r0)
+    nop
+  a8:	e1a00000 	nop			; (mov r0, r0)
+
+    ldr r0, =_rMPLLCON  //设置MPLL
+  ac:	e59f0150 	ldr	r0, [pc, #336]	; 204 <undef+0x20>
+    ldr r1, =((M_MDIV << 12) + (M_PDIV << 4) + M_SDIV)
+  b0:	e59f1150 	ldr	r1, [pc, #336]	; 208 <undef+0x24>
+    str r1, [r0]
+  b4:	e5801000 	str	r1, [r0]
+
+    ldr r0, =_rCLKCON   //初始化外设时钟使能控制寄存器
+  b8:	e59f014c 	ldr	r0, [pc, #332]	; 20c <undef+0x28>
+    ldr r1, =rCLKCON_INIT
+  bc:	e59f114c 	ldr	r1, [pc, #332]	; 210 <undef+0x2c>
+    str r1, [r0]
+  c0:	e5801000 	str	r1, [r0]
+
+    //4.初始化SDRAM
+    ldr r0, =_rBWSCON   //初始化各个块的总线宽度和wait状态
+  c4:	e3a00312 	mov	r0, #1207959552	; 0x48000000
+    ldr r1, =rBWSCON_INIT
+  c8:	e3a01422 	mov	r1, #570425344	; 0x22000000
+    str r1, [r0]
+  cc:	e5801000 	str	r1, [r0]
+
+    ldr r0, =_rBANKCON0 //初始化bank0~5
+  d0:	e59f013c 	ldr	r0, [pc, #316]	; 214 <undef+0x30>
+    ldr r1, =rBANKCON_0_5_INIT
+  d4:	e3a01c07 	mov	r1, #1792	; 0x700
+    mov r2, r1
+  d8:	e1a02001 	mov	r2, r1
+    mov r3, r1
+  dc:	e1a03001 	mov	r3, r1
+    mov r4, r1
+  e0:	e1a04001 	mov	r4, r1
+    mov r5, r1
+  e4:	e1a05001 	mov	r5, r1
+    mov r6, r1
+  e8:	e1a06001 	mov	r6, r1
+    stmia r0!, {r1-r6}
+  ec:	e8a0007e 	stmia	r0!, {r1, r2, r3, r4, r5, r6}
+
+    ldr r0, =(_rBANKCON0 + (6 << 2))  //初始化bank6和bank7
+  f0:	e59f0120 	ldr	r0, [pc, #288]	; 218 <undef+0x34>
+    ldr r1, =rBANKCON6_INIT
+  f4:	e59f1120 	ldr	r1, [pc, #288]	; 21c <undef+0x38>
+    str r1, [r0]
+  f8:	e5801000 	str	r1, [r0]
+
+    ldr r0, =(_rBANKCON0 + (7 << 2))
+  fc:	e59f011c 	ldr	r0, [pc, #284]	; 220 <undef+0x3c>
+    ldr r1, =rBANKCON7_INIT
+ 100:	e59f1114 	ldr	r1, [pc, #276]	; 21c <undef+0x38>
+    str r1, [r0]
+ 104:	e5801000 	str	r1, [r0]
+
+    ldr r0, =_rREFRESH  //初始化刷新控制寄存器
+ 108:	e59f0114 	ldr	r0, [pc, #276]	; 224 <undef+0x40>
+    ldr r1, =rREFRESH_INIT
+ 10c:	e59f1114 	ldr	r1, [pc, #276]	; 228 <undef+0x44>
+    str r1, [r0]
+ 110:	e5801000 	str	r1, [r0]
+
+    ldr r0, =_rBANKSIZE //初始化banksize寄存器
+ 114:	e59f0110 	ldr	r0, [pc, #272]	; 22c <undef+0x48>
+    ldr r1, =rBANKSIZE_INIT
+ 118:	e3a010b1 	mov	r1, #177	; 0xb1
+    str r1, [r0]
+ 11c:	e5801000 	str	r1, [r0]
+
+    ldr r0, =_rMRSRB6   //初始化SDRAM模式寄存器，设置CAS
+ 120:	e59f0108 	ldr	r0, [pc, #264]	; 230 <undef+0x4c>
+    ldr r1, =_rMRSRB7
+ 124:	e59f1108 	ldr	r1, [pc, #264]	; 234 <undef+0x50>
+    ldr r2, =rMRSRB_INIT
+ 128:	e3a02030 	mov	r2, #48	; 0x30
+    str r2, [r0]
+ 12c:	e5802000 	str	r2, [r0]
+    str r2, [r1]
+ 130:	e5812000 	str	r2, [r1]
+
+    bl _init_stack
+ 134:	eb000001 	bl	140 <_init_stack>
+
+    ldr r0, =EXCEPTION_RESET  //标志当前处理在处理rest异常
+ 138:	e3a00000 	mov	r0, #0
+    ldr pc, =KERNEL_ADDR
+ 13c:	e3a0f203 	mov	pc, #805306368	; 0x30000000
+
+00000140 <_init_stack>:
+
+_init_stack:
+    //初始化特权模式的栈空间
+    ldr sp, =STACK_ADDR_SVC   //svc模式
+ 140:	e3a0d30d 	mov	sp, #872415232	; 0x34000000
+    mrs r1, cpsr    //保存svc模式下的cpsr
+ 144:	e10f1000 	mrs	r1, CPSR
+
+    mrs r0, cpsr
+ 148:	e10f0000 	mrs	r0, CPSR
+    bic r0, #0x1f
+ 14c:	e3c0001f 	bic	r0, r0, #31
+    orr r0, #CPU_MODE_FIQ   //将当前状态设置为FIQ模式，并初始化栈空间
+ 150:	e3800011 	orr	r0, r0, #17
+    msr cpsr, r0
+ 154:	e129f000 	msr	CPSR_fc, r0
+    ldr sp, =STACK_ADDR_FIQ
+ 158:	e3a0d30d 	mov	sp, #872415232	; 0x34000000
+
+    bic r0, #0x1f
+ 15c:	e3c0001f 	bic	r0, r0, #31
+    orr r0, #CPU_MODE_IRQ
+ 160:	e3800012 	orr	r0, r0, #18
+    msr cpsr, r0    //将当前状态设置为IRQ模式，并初始化栈空间
+ 164:	e129f000 	msr	CPSR_fc, r0
+    ldr sp, =STACK_ADDR_IRQ 
+ 168:	e3a0d30d 	mov	sp, #872415232	; 0x34000000
+
+    bic r0, #0x1f
+ 16c:	e3c0001f 	bic	r0, r0, #31
+    orr r0, #CPU_MODE_ABT    //将当前状态设置为Abort模式，并初始化栈空间
+ 170:	e3800017 	orr	r0, r0, #23
+    msr cpsr, r0
+ 174:	e129f000 	msr	CPSR_fc, r0
+    ldr sp, =STACK_ADDR_ABORT
+ 178:	e3a0d30d 	mov	sp, #872415232	; 0x34000000
+
+    bic r0, #0x1f
+ 17c:	e3c0001f 	bic	r0, r0, #31
+    orr r0, #CPU_MODE_UND    //将当前状态设置为UND模式，并初始化栈空间
+ 180:	e380001b 	orr	r0, r0, #27
+    msr cpsr, r0
+ 184:	e129f000 	msr	CPSR_fc, r0
+    ldr sp, =STACK_ADDR_UND
+ 188:	e3a0d30d 	mov	sp, #872415232	; 0x34000000
+
+    bic r0, #0x1f
+ 18c:	e3c0001f 	bic	r0, r0, #31
+    orr r0, #CPU_MODE_SYS    //将当前状态设置为SYS或者USER模式，并初始化栈空间
+ 190:	e380001f 	orr	r0, r0, #31
+    msr cpsr, r0
+ 194:	e129f000 	msr	CPSR_fc, r0
+    ldr sp, =STACK_ADDR_SYS_AND_USER
+ 198:	e3a0d30d 	mov	sp, #872415232	; 0x34000000
+
+    msr cpsr, r1    //恢复到svc模式
+ 19c:	e129f001 	msr	CPSR_fc, r1
+    mov pc, lr
+ 1a0:	e1a0f00e 	mov	pc, lr
+
+000001a4 <_exc_handler_irq>:
+
+
+
+
+_exc_handler_irq:
+    sub lr, #4  //计算返回地址
+ 1a4:	e24ee004 	sub	lr, lr, #4
+    stmfd sp!, {r0-r12, lr} //保存任务寄存器组的r0-r12和返回地址(pc)，r13和r14使用irq模式寄存器，不需要保存
+ 1a8:	e92d5fff 	push	{r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, fp, ip, lr}
+    nop
+ 1ac:	e1a00000 	nop			; (mov r0, r0)
+    mrs r0, spsr
+ 1b0:	e14f0000 	mrs	r0, SPSR
+    push {r0}   //保存任务的cpsr，以支持中断嵌套
+ 1b4:	e92d0001 	push	{r0}
+
+    ldr r0, =EXCEPTION_IRQ
+ 1b8:	e3a00005 	mov	r0, #5
+    ldr pc, =KERNEL_ADDR
+ 1bc:	e3a0f203 	mov	pc, #805306368	; 0x30000000
+
+000001c0 <_exc_handler_swi>:
+
+
+
+
+_exc_handler_swi:
+    ldr r0, =EXCEPTION_SWI
+ 1c0:	e3a00002 	mov	r0, #2
+    ldr pc, =KERNEL_ADDR
+ 1c4:	e3a0f203 	mov	pc, #805306368	; 0x30000000
+
+000001c8 <_exc_handler_data_abort>:
+
+_exc_handler_data_abort:
+    ldr r0, =EXCEPTION_DATA_ABORT
+ 1c8:	e3a00004 	mov	r0, #4
+    ldr pc, =KERNEL_ADDR
+ 1cc:	e3a0f203 	mov	pc, #805306368	; 0x30000000
+
+000001d0 <_exc_handler_prefetch_abort>:
+
+_exc_handler_prefetch_abort:
+    ldr r0, =EXCEPTION_PREFETCH_ABORT
+ 1d0:	e3a00003 	mov	r0, #3
+    ldr pc, =KERNEL_ADDR
+ 1d4:	e3a0f203 	mov	pc, #805306368	; 0x30000000
+
+000001d8 <_exc_handler_undef>:
+    
+
+_exc_handler_undef:
+    ldr r0, =EXCEPTION_UNDEF
+ 1d8:	e3a00001 	mov	r0, #1
+    ldr pc, =KERNEL_ADDR
+ 1dc:	e3a0f203 	mov	pc, #805306368	; 0x30000000
+
+000001e0 <_exc_handler_ifq>:
+
+
+_exc_handler_ifq:
+    bl _start
+ 1e0:	ebffff86 	bl	0 <_start>
+
+000001e4 <undef>:
+ 1e4:	eeadc0de 	.word	0xeeadc0de
+ 1e8:	4a000008 	.word	0x4a000008
+ 1ec:	4a00001c 	.word	0x4a00001c
+ 1f0:	00007fff 	.word	0x00007fff
+ 1f4:	4c000014 	.word	0x4c000014
+ 1f8:	4c000018 	.word	0x4c000018
+ 1fc:	4c000008 	.word	0x4c000008
+ 200:	00038022 	.word	0x00038022
+ 204:	4c000004 	.word	0x4c000004
+ 208:	0005c011 	.word	0x0005c011
+ 20c:	4c00000c 	.word	0x4c00000c
+ 210:	00fffff0 	.word	0x00fffff0
+ 214:	48000004 	.word	0x48000004
+ 218:	4800001c 	.word	0x4800001c
+ 21c:	00018005 	.word	0x00018005
+ 220:	48000020 	.word	0x48000020
+ 224:	48000024 	.word	0x48000024
+ 228:	009804f4 	.word	0x009804f4
+ 22c:	48000028 	.word	0x48000028
+ 230:	4800002c 	.word	0x4800002c
+ 234:	48000030 	.word	0x48000030

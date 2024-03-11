@@ -1,0 +1,50 @@
+{
+    "tasks": [
+        {
+            "label": "启动JLinkGDBServer",
+            "type": "shell",
+            "presentation": {
+                "reveal": "never"
+            },
+            "linux": {
+                "command": "bash JLinkGDBServer-run.sh"
+            },
+            "options": {
+                "cwd": "${workspaceRoot}/script/"
+            },
+            "problemMatcher": [],
+        },
+        {
+            "label": "wsl串口启动",
+            "type": "shell",
+            "linux": {
+                "command": "bash wsl-serialPort-start.sh"
+            },
+            "options": {
+                "cwd": "${workspaceRoot}/script/"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "下载bin文件",
+            "type": "shell",
+            "linux": {
+                "command": "bash JLinkCMD-download.sh"
+            },
+            "options": {
+                "cwd": "${workspaceRoot}/script/"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "调试准备",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "下载bin文件",
+                "启动JLinkGDBServer",
+            ],
+            "problemMatcher": []
+        }
+    ],
+    "version": "2.0.0"
+}

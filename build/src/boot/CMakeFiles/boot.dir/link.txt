@@ -1,0 +1,1 @@
+arm-linux-ld CMakeFiles/boot.dir/boot.S.o CMakeFiles/boot.dir/boot.c.o -T /home/kbpoyo/code/uC-OS2-s3c2440/src/boot/boot.lds -o /home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot/boot.elf

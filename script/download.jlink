@@ -1,0 +1,5 @@
+r
+loadbin ../bin/ucos.bin 0x30000000
+//loadbin ../bin/disk.bin 0x30200000
+
+//quit

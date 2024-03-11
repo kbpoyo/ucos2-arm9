@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/common/os_config.h
+
+../inc/common/register_addr.h
+os_config.h
+../inc/common/os_config.h
+
+/home/kbpoyo/code/uC-OS2-s3c2440/src/boot/boot.S
+common/register_addr.h
+/home/kbpoyo/code/uC-OS2-s3c2440/src/boot/common/register_addr.h
+common/os_config.h
+/home/kbpoyo/code/uC-OS2-s3c2440/src/boot/common/os_config.h
+

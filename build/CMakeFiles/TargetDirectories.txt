@@ -1,0 +1,8 @@
+/home/kbpoyo/code/uC-OS2-s3c2440/build/CMakeFiles/edit_cache.dir
+/home/kbpoyo/code/uC-OS2-s3c2440/build/CMakeFiles/rebuild_cache.dir
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot/CMakeFiles/boot.dir
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot/CMakeFiles/edit_cache.dir
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/boot/CMakeFiles/rebuild_cache.dir
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos/CMakeFiles/ucos.dir
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos/CMakeFiles/edit_cache.dir
+/home/kbpoyo/code/uC-OS2-s3c2440/build/src/ucos/CMakeFiles/rebuild_cache.dir

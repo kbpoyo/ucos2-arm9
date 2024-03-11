@@ -1,0 +1,68 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : {},
+				"path" : "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc",
+				"version" : ""
+			},
+			"language" : "ASM",
+			"sourceFileExtensions" : 
+			[
+				"s",
+				"S",
+				"asm"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/lib/gcc/arm-none-linux-gnueabi/4.4.3/include",
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/lib/gcc/arm-none-linux-gnueabi/4.4.3/include-fixed",
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/include",
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/sys-root/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/lib/gcc/arm-none-linux-gnueabi/4.4.3",
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/lib/gcc",
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/lib",
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/sys-root/lib",
+						"/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/sys-root/usr/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"gcc",
+						"gcc_s",
+						"c",
+						"gcc",
+						"gcc_s"
+					]
+				},
+				"path" : "/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/bin/arm-linux-gcc",
+				"version" : "4.4.3"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

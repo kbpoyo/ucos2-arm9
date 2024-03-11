@@ -1,0 +1,174 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "src/boot/boot"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"src/boot/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 42,
+				"parent" : 2
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/inc"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg"
+				}
+			],
+			"language" : "ASM",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/inc"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/source"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/port"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/kbpoyo/code/uC-OS2-s3c2440/src/ucos/cfg"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"id" : "boot::@b30e2321ffd3d731b1a3",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-O0 -Wall -fno-pie -fno-stack-protector -std=c99 -g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-T /home/kbpoyo/code/uC-OS2-s3c2440/src/boot/boot.lds   -rdynamic",
+				"role" : "flags"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "boot",
+	"nameOnDisk" : "boot",
+	"paths" : 
+	{
+		"build" : "src/boot",
+		"source" : "src/boot"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/boot/boot.S",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "src/boot/boot.c",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "EXECUTABLE"
+}
