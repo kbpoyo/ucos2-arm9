@@ -16,7 +16,9 @@ src/ucos/CMakeFiles/ucos.dir/board/irq.c.o: ../src/ucos/board/irq.c \
   ../inc/common/register_addr.h \
   ../inc/common/os_config.h \
   ../inc/common/types.h \
-  ../inc/tools/assert.h
+  ../inc/tools/assert.h \
+  ../src/ucos/board/uart.h \
+  ../inc/common/os_config.h
 
 src/ucos/CMakeFiles/ucos.dir/board/timer.c.o: ../src/ucos/board/timer.c \
   ../src/ucos/board/timer.h \
@@ -140,9 +142,13 @@ src/ucos/CMakeFiles/ucos.dir/source/ucos_ii.c.o: ../src/ucos/source/ucos_ii.c \
 
 ../src/ucos/cfg/os_cfg.h:
 
-/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/sys-root/usr/include/bits/stdio_lim.h:
+../src/ucos/source/os_core.c:
 
-../src/ucos/board/timer.h:
+../src/ucos/board/uart.h:
+
+../src/ucos/port/os_cpu.h:
+
+../src/tools/klib.c:
 
 ../inc/tools/assert.h:
 
@@ -178,13 +184,9 @@ src/ucos/CMakeFiles/ucos.dir/source/ucos_ii.c.o: ../src/ucos/source/ucos_ii.c \
 
 /home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/sys-root/usr/include/stdio.h:
 
-../src/ucos/port/os_cpu.h:
+/home/kbpoyo/opt/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/sys-root/usr/include/bits/stdio_lim.h:
 
-../src/tools/klib.c:
-
-../src/ucos/source/os_core.c:
-
-../src/ucos/board/uart.h:
+../src/ucos/board/timer.h:
 
 ../src/ucos/source/os_flag.c:
 

@@ -47,6 +47,9 @@ _start:
 
 
 _os_init:
+
+        @关闭中断
+    msr cpsr_c, (CPU_MASK_IRQ | CPU_MODE_SVC)
     mov r0, #0
     mov r1, r0
     mov r2, r0
@@ -72,14 +75,11 @@ _irq_handler:
     @ 告知ucos系统进入中断,以增加一次中断记录次数
     bl  OSIntEnter                      
     
-    @打开中断
-@     msr cpsr_c, #CPU_MODE_IRQ
-
-    @执行中断服务程序
+    @执行中断服务程序,允许在部分中断中打开中断进行中断嵌套
     bl irq_handler
     
-    @关闭中断
-@     msr cpsr_c, #(CPU_MASK_IRQ | CPU_MODE_IRQ)
+    @确保中断关闭
+    msr cpsr_c, (CPU_MASK_IRQ | CPU_MODE_IRQ)
 
     @告知ucos系统离开中断,以取消一次中断记录次数
     bl   OSIntExit           
@@ -103,22 +103,23 @@ OS_IntCtxSw:
     mov r1, #0
     str r1, [r0]
 
-    @切换到svc模式获取任务栈指针
+    @切换到svc模式获取任务栈指针和lr寄存器
     mrs r0, cpsr
     msr cpsr_c, (CPU_MASK_IRQ | CPU_MODE_SVC)
-    mov r1, sp
+    mov r1, sp  @记录任务的sp
+    mov r2, lr  @记录任务的lr
     msr cpsr, r0
 
     @将中断保存的上下文环境保存到任务栈中
-    add r0, sp, #40 @r0->{r9, r10, r11, r12, pc}，r1指向当前任务的栈顶
-    ldmfd r0!, {r3-r7} @保存中断栈中的寄存器
-    stmfd r1!, {r3-r7} @保存到任务栈中
-    add r0, sp, #20 @r0->{r4, r5, r6, r7, r8}，r1指向当前任务的栈顶
-    ldmfd r0!, {r3-r7} @保存中断栈中的寄存器
-    stmfd r1!, {r3-r7} @保存到任务栈中
-    add r0, sp, #0 @r0->{spsr, r0, r1, r2, r3}，r1指向当前任务的栈顶
-    ldmfd r0!, {r3-r7} @保存中断栈中的寄存器
-    stmfd r1!, {r3-r7} @保存到任务栈中
+    add r0, sp, #56     @r0->{pc}，r1指向当前任务的栈顶
+    ldmfd r0, {r3}      
+    stmfd r1!, {r2-r3}  @保存{lr, pc}
+    add r0, sp, #28     @r0->{r6, r7, r8, r9, r10, r11,r12}
+    ldmfd r0, {r2-r8}
+    stmfd r1!, {r2-r8}  @保存{r6-r12}
+    add r0, sp, #0      @r0->{spsr, r0, r1, r2, r3, r4, r5}，r1指向当前任务的栈顶
+    ldmfd r0, {r2-r8} 
+    stmfd r1!, {r2-r8}  @保存{spsr, r0-r5}
 
     @清空当前irq栈中的内容
     add sp, #60
@@ -130,7 +131,7 @@ OS_IntCtxSw:
 
     @调用OSTaskSwHook函数,以在任务切换时执行一些特定的操作
     @必须在切换为svc模式前调用，不然之后的压栈会覆盖之前在svc中保存的上下文
-@     bl      OSTaskSwHook
+    bl      OSTaskSwHook
 
     @切换cpu模式为svc模式，并保持中断关闭,准备进行任务返回
     msr cpsr_c, (CPU_MASK_IRQ | CPU_MODE_SVC)   
@@ -152,7 +153,7 @@ OS_IntCtxSw:
     @恢复cpu上下文
     pop {r0}
     msr spsr, r0    @恢复spsr,在最后模式返回的时候再将其拷贝到cpsr
-    ldmfd sp!, {r0-r12, pc}^    @任务寄存器恢复，并将spsr拷贝到cpsr以回到之前的任务状态
+    ldmfd sp!, {r0-r12, lr, pc}^    @任务寄存器恢复，并将spsr拷贝到cpsr以回到之前的任务状态
 
 
 
@@ -182,6 +183,7 @@ OS_CPU_RestoreSR:
 @外部调用者已做了临界区保护，关闭了中断
 OSCtxSw:    @在svc模式中直接进行任务切换
         @保存当前任务的上下文环境到当前任务栈中
+        push {lr}@保存返回地址
         stmfd   sp!,{r0-r12,lr}
         mrs r0, cpsr
         push {r0}
@@ -194,7 +196,7 @@ OSCtxSw:    @在svc模式中直接进行任务切换
 
 
         @调用OSTaskSwHook函数,以在任务切换时执行一些特定的操作
-        @ bl      OSTaskSwHook
+        bl      OSTaskSwHook
 
 
         @更新当前任务优先级标志
@@ -219,7 +221,7 @@ OSCtxSw:    @在svc模式中直接进行任务切换
         @此处调度，外部环境是
         @ orr r0, #CPU_MASK_IRQ   
         msr spsr, r0    @恢复spsr,在最后模式返回的时候再将其拷贝到cpsr
-        ldmfd sp!, {r0-r12, pc}^    @任务寄存器恢复，并将spsr拷贝到cpsr以回到之前的任务状态
+        ldmfd sp!, {r0-r12, lr, pc}^    @任务寄存器恢复，并将spsr拷贝到cpsr以回到之前的任务状态
 
 
 @进行第一个任务的上下文加载
@@ -241,7 +243,7 @@ OSStartHighRdy:
         @恢复cpu上下文，第一个任务被调度即会打开中断
         pop {r0}
         msr spsr, r0    @恢复spsr,在最后模式返回的时候再将其拷贝到cpsr
-        ldmfd sp!, {r0-r12, pc}^    @任务寄存器恢复，并将spsr拷贝到cpsr以回到之前的任务状态
+        ldmfd sp!, {r0-r12, lr, pc}^    @任务寄存器恢复，并将spsr拷贝到cpsr以回到之前的任务状态
                      
 
 _undef_handler:

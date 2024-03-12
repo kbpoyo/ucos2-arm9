@@ -1,6 +1,7 @@
 #include "irq.h"
 #include "common/types.h"
 #include "tools/assert.h"
+#include "uart.h"
 
 static irq_handler_t irq_handler_call[IRQ_NUM_MAX];
 
@@ -131,19 +132,27 @@ void irq_handler_register(int irq_num, irq_handler_t handler_for_irq) {
 void irq_handler_for_eint8_23() {
   // ASSERT(rINTOFFSET = EINT8_23);
 
+
   if (((1 << EINT8_SUB) & rEINTPEND) &&
       !((1 << EINT8_SUB) & rEINTMASK)) {  // EINT8触发成功
-    uart_printf("EINT8 has complete!\n");
 
     // 清除中断
     irq_clear(EINT8_PRIM, EINT8_SUB);
+
+    //打开中断,测试中断嵌套效果
+    // cpu_irq_start();
+
+    uart_send_str("EINT8 has complete!\n");
   }
 
   if (((1 << EINT11_SUB) & rEINTPEND) &&
       !((1 << EINT11_SUB) & rEINTMASK)) {  // EINT11触发成功
-    uart_printf("EINT11 has complete!\n");
-
     irq_clear(EINT11_PRIM, EINT11_SUB);
+
+    //打开中断,测试中断嵌套效果
+    // cpu_irq_start();
+  
+    uart_send_str("EINT11 has complete!\n");
   }
 }
 

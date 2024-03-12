@@ -17,12 +17,8 @@ _start:
 
 
 _exc_handler_reset:
-    //设置svc模式,并关闭irq
-    mrs r0, cpsr
-    bic r0, #0x1f
-    orr r0, #0xd3  
-    msr cpsr, r0
 
+    msr cpsr_c, (CPU_MASK_IRQ | CPU_MODE_SVC)
     //1.关闭看门狗
     ldr r0, =_rWTCON
     ldr r1, =0x0

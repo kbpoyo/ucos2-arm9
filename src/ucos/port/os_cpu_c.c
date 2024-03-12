@@ -111,7 +111,8 @@ void OSTaskDelHook(OS_TCB *ptcb) {
 *********************************************************************************************************
 */
 #if OS_CPU_HOOKS_EN > 0 && OS_VERSION >= 251
-void OSTaskIdleHook(void) {}
+void OSTaskIdleHook(void) {
+}
 #endif
 
 /*
@@ -167,7 +168,7 @@ OS_STK *OSTaskStkInit(void (*task)(void *pd), void *p_arg, OS_STK *ptos,
   opt = opt; //不使用opt，防止编译器警告
   stk = ptos;
   *(--stk) = (OS_STK)task;  // pc = task
-  stk -= 13;                // r1-r12 = 0
+  stk -= 14;                // r1-r12, lr(r14) = 0
 
   *stk = (OS_STK)p_arg;             // r0 = p_arg 任务传入参数
   *(--stk) = (OS_STK)ARM_SVC_MODE;  // cpsr = SVC mode

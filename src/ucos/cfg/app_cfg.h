@@ -97,10 +97,11 @@
 #define MAIN_TASK_PRIO 5
 #define TASK0_PRIO 6
 
-#define MAIN_TASK_STK_LEN 1024 * 2
-#define TASK0_STK_LEN 1024 * 2
+#define MAIN_TASK_STK_LEN 1024
+#define TASK0_STK_LEN 1024
 
 void MainTask(void *pdata);
 void Task0(void *pdata);
+
 
 #endif /* End of module include.              */
